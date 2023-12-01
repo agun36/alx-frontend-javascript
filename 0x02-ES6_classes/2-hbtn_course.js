@@ -1,59 +1,40 @@
-// 2-hbtn_course.js
-
 export default class HolbertonCourse {
   constructor(name, length, students) {
-    this._name = this.validateName(name);
-    this._length = this.validateLength(length);
-    this._students = this.validateStudents(students);
+    this.name = name;
+    this.length = length;
+    this.students = students;
   }
 
-  // Getter and setter for the name attribute
   get name() {
     return this._name;
   }
 
-  set name(newName) {
-    this._name = this.validateName(newName);
+  set name(name) {
+    if ((typeof name !== 'string') && !(name instanceof String)) {
+      throw new TypeError('Name must be a string');
+    }
+    this._name = name;
   }
 
-  // Getter and setter for the length attribute
   get length() {
     return this._length;
   }
 
-  set length(newLength) {
-    this._length = this.validateLength(newLength);
+  set length(length) {
+    if ((typeof length !== 'number') && !(length instanceof Number)) {
+      throw new TypeError('Length must be a number');
+    }
+    this._length = length;
   }
 
-  // Getter and setter for the students attribute
   get students() {
     return this._students;
   }
 
-  set students(newStudents) {
-    this._students = this.validateStudents(newStudents);
-  }
-
-  // Validation functions
-  validateName(name) {
-    if (typeof name !== 'string') {
-      throw new TypeError('Name must be a string');
-    }
-    return name;
-  }
-
-  validateLength(length) {
-    const parsedLength = parseInt(length, 10);
-    if (isNaN(parsedLength) || typeof parsedLength !== 'number') {
-      throw new TypeError('Length must be a number');
-    }
-    return parsedLength;
-  }
-
-  validateStudents(students) {
-    if (!Array.isArray(students) || students.some(student => typeof student !== 'string')) {
+  set students(students) {
+    if (!(students instanceof Array) || !students.every((s) => typeof s === 'string')) {
       throw new TypeError('Students must be an array of strings');
     }
-    return students;
+    this._students = students;
   }
 }
