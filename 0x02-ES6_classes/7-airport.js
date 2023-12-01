@@ -1,23 +1,16 @@
-// 7-airport.js
-
 export default class Airport {
   constructor(name, code) {
+    if (typeof name !== 'string') {
+      throw new TypeError('Name must be a string');
+    }
+    if (typeof code !== 'string') {
+      throw new TypeError('Code must be a string');
+    }
     this._name = name;
     this._code = code;
   }
 
-  // Getter for the name attribute
-  get name() {
-    return this._name;
-  }
-
-  // Getter for the code attribute
-  get code() {
+  get [Symbol.toStringTag]() {
     return this._code;
-  }
-
-  // Override the default toString method
-  toString() {
-    return `[${this._code}] { _name: '${this._name}', _code: '${this._code}' }`;
   }
 }
