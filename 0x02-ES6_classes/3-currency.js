@@ -1,39 +1,32 @@
-// 3-currency.js
-
 export default class Currency {
   constructor(code, name) {
-    this._code = this.validateString(code, 'Code');
-    this._name = this.validateString(name, 'Name');
+    this.code = code;
+    this.name = name;
   }
 
-  // Getter and setter for the code attribute
-  get code() {
-    return this._code;
-  }
-
-  set code(newCode) {
-    this._code = this.validateString(newCode, 'Code');
-  }
-
-  // Getter and setter for the name attribute
-  get name() {
-    return this._name;
-  }
-
-  set name(newName) {
-    this._name = this.validateString(newName, 'Name');
-  }
-
-  // Method to display the full currency format
   displayFullCurrency() {
     return `${this._name} (${this._code})`;
   }
 
-  // Validation function for strings
-  validateString(value, attribute) {
-    if (typeof value !== 'string') {
-      throw new TypeError(`${attribute} must be a string`);
+  get code() {
+    return this._code;
+  }
+
+  set code(code) {
+    if ((typeof code !== 'string') && !(code instanceof String)) {
+      throw new TypeError('Code must be a string');
     }
-    return value;
+    this._code = code;
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  set name(name) {
+    if ((typeof name !== 'string') && !(name instanceof String)) {
+      throw new TypeError('Name must be a string');
+    }
+    this._name = name;
   }
 }

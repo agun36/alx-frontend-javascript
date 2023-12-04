@@ -1,48 +1,44 @@
-import Currency from './3-currency.js';
+import Currency from './3-currency';
 
 export default class Pricing {
   constructor(amount, currency) {
-    this._amount = this.validateNumber(amount, 'Amount');
-    this._currency = this.validateCurrency(currency, 'Currency');
+    this.amount = amount;
+    this.currency = currency;
   }
 
   get amount() {
     return this._amount;
   }
 
-  set amount(newAmount) {
-    this._amount = this.validateNumber(newAmount, 'Amount');
+  set amount(amount) {
+    if ((typeof amount !== 'number') && !(amount instanceof Number)) {
+      throw new TypeError('Amount must be a number');
+    }
+    this._amount = amount;
   }
 
   get currency() {
     return this._currency;
   }
 
-  set currency(newCurrency) {
-    this._currency = this.validateCurrency(newCurrency, 'Currency');
+  set currency(currency) {
+    if (!(currency instanceof Currency)) {
+      throw new TypeError('Currency must be an instanceof of Currency');
+    }
+    this._currency = currency;
   }
 
   displayFullPrice() {
-    const { name, code } = this._currency;
-    return `${this._amount} ${name} (${code})`;
+    return `${this._amount} ${this._currency.name} (${this._currency.code})`;
   }
 
   static convertPrice(amount, conversionRate) {
+    if (typeof amount !== 'number') {
+      throw new TypeError('amount must be a number');
+    }
+    if (typeof conversionRate !== 'number') {
+      throw new TypeError('Conversion rate must be a number');
+    }
     return amount * conversionRate;
-  }
-
-  validateNumber(value, attribute) {
-    const parsedValue = parseFloat(value);
-    if (isNaN(parsedValue) || typeof parsedValue !== 'number') {
-      throw new TypeError(`${attribute} must be a number`);
-    }
-    return parsedValue;
-  }
-
-  validateCurrency(value, attribute) {
-    if (!(value instanceof Currency)) {
-      throw new TypeError(`${attribute} must be an instance of Currency`);
-    }
-    return value;
   }
 }
